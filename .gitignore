@@ -28,7 +28,4 @@ Thumbs.db
 # Project specific
 artifacts/
 *.log
-
-# Jupyter Notebooks (may contain API keys)
-*.ipynb
-*.ipynb_checkpoints/
+.ipynb_checkpoints/
