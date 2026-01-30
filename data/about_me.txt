@@ -1,0 +1,25 @@
+My name is Abhiram Soni from Chatra Jharkhand India. i am  data scientist and Agentic ai engineer inthuiast with a strong academic foundation and a deep passion for solving real-world problems through data-driven solutions.
+
+I hold a Bachelor’s degree in Mathematics and am currently pursuing my Master’s in Computer Science, specializing in Data Science and Artificial Intelligence from Wolf University in collaboration with AlmaBetter Innoversity.
+
+My background in mathematics has developed my analytical thinking, which I now apply across various domains using machine learning and AI techniques. I’ve worked on several impactful projects, including:
+
+WebBased Interactive Agent
+
+Fraud Detection using machine learning algorithms
+
+Recommendation Systems based on user behavior
+
+Hotel Booking Analysis using Matplotlib, Seaborn, and Tableau
+
+Sky Analytics with Excel dashboards
+
+Healthcare Data Analysis using a dynamic Power BI dashboard
+
+These projects allowed me to combine statistical insights with practical implementation using tools like Python, SQL, and popular ML frameworks.
+
+Additionally, I developed a web-based interactive AI agent that allows users to ask questions via a shared URL and receive real-time responses. This project enhanced my skills in building intelligent, user-centric applications and deploying them effectively on the web.
+
+Outside the tech space, I’m passionate about cricket and chess. Cricket has taught me discipline and teamwork, while chess helps sharpen my strategic and logical thinking — both qualities that support my problem-solving approach in data science.
+
+I’m excited to continue learning, contribute to innovative projects, and grow as a professional in the field of Data Science and AI.

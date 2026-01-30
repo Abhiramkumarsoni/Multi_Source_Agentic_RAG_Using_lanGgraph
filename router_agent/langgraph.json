@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        "."
+    ],
+    "graphs": {
+        "router_agent": "./graph_export.py:graph"
+    },
+    "env": "../.env"
+}

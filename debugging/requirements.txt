@@ -1,0 +1,16 @@
+# Requirements for Agentic RAG Debugging
+langchain
+langchain-core
+langchain-community
+langchain-groq
+langgraph
+langgraph-cli[inmem]
+python-dotenv
+faiss-cpu
+langchain_huggingface
+bs4
+lxml
+arxiv
+wikipedia
+pypdf
+duckduckgo-search

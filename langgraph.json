@@ -1,0 +1,10 @@
+{
+    "dependencies": [
+        "."
+    ],
+    "graphs": {
+        "router_agent": "./router_agent/graph_export.py:graph",
+        "agentic_rag_agent": "./src/graph/graph_export.py:graph"
+    },
+    "env": "./.env"
+}
