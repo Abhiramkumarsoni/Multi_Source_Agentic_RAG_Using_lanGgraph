@@ -1,3 +1,14 @@
+---
+title: Multi Source Rag Agent
+emoji: 🤖
+colorFrom: purple
+colorTo: blue
+sdk: docker
+pinned: false
+license: mit
+app_port: 7860
+---
+
 # Agentic RAG with Multiple Tools
 
 > **Multi-Source Retrieval Augmented Generation System using LangGraph**
