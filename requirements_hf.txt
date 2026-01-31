@@ -1,0 +1,43 @@
+# Core LangChain & LangGraph
+langchain>=0.2.0
+langchain-core>=0.2.0
+langchain-community>=0.2.0
+langchain-groq>=0.1.0
+langchain-huggingface>=0.0.3
+langgraph>=0.1.0
+langgraph-checkpoint>=1.0.0
+langchainhub>=0.1.0
+langsmith>=0.1.0
+
+# LLM & Embeddings
+groq>=0.5.0
+sentence-transformers>=2.2.0
+
+# Vector Store
+faiss-cpu>=1.7.0
+
+# Data Sources
+arxiv>=2.0.0
+wikipedia>=1.4.0
+duckduckgo-search>=5.0.0
+pypdf>=4.0.0
+
+# Web & HTTP
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Streamlit UI
+streamlit>=1.30.0
+
+# Environment & Config
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Utilities
+typing-extensions>=4.8.0
+tenacity>=8.2.0

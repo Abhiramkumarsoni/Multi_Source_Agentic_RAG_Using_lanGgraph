@@ -1,0 +1,46 @@
+# Files to ignore when deploying to Hugging Face Spaces
+# This keeps your Space clean and reduces build time
+
+# Virtual environments
+myenv/
+venv/
+env/
+ENV/
+
+# Cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git files
+.git/
+.gitignore
+
+# Local environment
+.env.local
+
+# Development files
+*.ipynb
+.ipynb_checkpoints/
+*.log
+artifacts/
+
+# Documentation (not needed in Space)
+self documentation/
+debugging/
+.langgraph_api/
+
+# Notebooks
+test_all_tools.ipynb
+
+# OS files
+.DS_Store
+Thumbs.db
