@@ -22,15 +22,28 @@ jobs:
                   fetch-depth: 0 # Get full git history
                   lfs: true # Support large files
 
-            # Step 2: Push to Hugging Face Spaces
+            # Step 2: Install and configure Git LFS for binary files
+            - name: Setup Git LFS
+              run: |
+                  git lfs install
+                  # Track PDF files with LFS
+                  git lfs track "*.pdf"
+                  git lfs track "data/*.pdf"
+
+            # Step 3: Push to Hugging Face Spaces
             - name: Push to Hugging Face Hub
+              env:
+                  HF_TOKEN: ${{ secrets.HF_TOKEN }}
               run: |
                   # Configure git
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
 
+                  # Add .gitattributes if LFS tracking created it
+                  git add .gitattributes 2>/dev/null || true
+                  git commit -m "Track PDFs with Git LFS" 2>/dev/null || true
+
                   # Add Hugging Face remote with token authentication
-                  # Format: https://USER:TOKEN@huggingface.co/spaces/USERNAME/SPACE_NAME
                   git remote add huggingface https://user:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/${{ secrets.HF_USERNAME }}/${{ secrets.HF_SPACE_NAME }}
 
                   # Force push to Hugging Face
