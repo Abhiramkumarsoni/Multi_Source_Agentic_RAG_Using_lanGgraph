@@ -25,9 +25,9 @@ def create_url_retriever_tool(urls: list):
             try:
                 docs = WebBaseLoader(url).load()
                 docs_list.extend(docs)
-                print(f"✓ Loaded: {url}")
+                print(f"[OK] Loaded: {url}")
             except Exception as e:
-                print(f"✗ Failed: {url} - {e}")
+                print(f"[FAIL] Failed: {url} - {e}")
         
         if not docs_list:
             print("No documents loaded from URLs")
@@ -48,9 +48,9 @@ def create_url_retriever_tool(urls: list):
             "Search for information about LangGraph. Use this for questions about LangGraph concepts, tutorials, and features."
         )
         
-        print(f"✓ URL Retriever Tool created ({len(doc_splits)} chunks)")
+        print(f"[OK] URL Retriever Tool created ({len(doc_splits)} chunks)")
         return url_retriever_tool
         
     except Exception as e:
-        print(f"✗ Failed to create URL retriever: {e}")
+        print(f"[FAIL] Failed to create URL retriever: {e}")
         return None

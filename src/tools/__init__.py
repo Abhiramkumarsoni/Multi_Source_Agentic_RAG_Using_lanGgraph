@@ -1,4 +1,4 @@
-"""
+﻿"""
 Tools package - Multi-source retrieval tools
 """
 from .wikipedia_tool import create_wikipedia_tool

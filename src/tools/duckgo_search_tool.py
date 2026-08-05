@@ -1,4 +1,4 @@
-"""
+﻿"""
 DuckDuckGo Search Tool - Web search
 """
 from langchain_community.tools import DuckDuckGoSearchRun
@@ -13,8 +13,8 @@ def create_duckgo_search_tool():
     """
     try:
         duckduckgo_tool = DuckDuckGoSearchRun()
-        print("✓ DuckDuckGo Tool created")
+        print("[OK] DuckDuckGo Tool created")
         return duckduckgo_tool
     except Exception as e:
-        print(f"✗ DuckDuckGo tool failed: {e}")
+        print(f"[FAIL] DuckDuckGo tool failed: {e}")
         return None

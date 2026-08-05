@@ -1,4 +1,4 @@
-"""
+﻿"""
 PDF Retriever Tool - Agent Quality Whitepaper search
 """
 from pathlib import Path
@@ -23,7 +23,7 @@ def create_pdf_retriever_tool(pdf_path: str):
         pdf_file = Path(pdf_path)
         
         if not pdf_file.exists():
-            print(f"✗ PDF not found: {pdf_path}")
+            print(f"[FAIL] PDF not found: {pdf_path}")
             return None
         
         loader = PyPDFLoader(str(pdf_file))
@@ -44,9 +44,9 @@ def create_pdf_retriever_tool(pdf_path: str):
             "Search the Agent Quality Whitepaper PDF. Use for questions about agent quality."
         )
         
-        print(f"✓ PDF Retriever Tool created ({len(pdf_splits)} chunks)")
+        print(f"[OK] PDF Retriever Tool created ({len(pdf_splits)} chunks)")
         return pdf_retriever_tool
         
     except Exception as e:
-        print(f"✗ Failed to create PDF retriever: {e}")
+        print(f"[FAIL] Failed to create PDF retriever: {e}")
         return None

@@ -9,7 +9,11 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     git \
+    git-lfs \
     && rm -rf /var/lib/apt/lists/*
+
+# Initialize Git LFS (required to pull actual PDF/binary files)
+RUN git lfs install
 
 # Create a non-root user for security (Hugging Face requirement)
 RUN useradd -m -u 1000 user
@@ -38,6 +42,9 @@ EXPOSE 7860
 # Set environment variables for Streamlit
 ENV STREAMLIT_SERVER_PORT=7860
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
+# Force UTF-8 encoding to prevent unicode errors from ✓/✗ symbols
+ENV PYTHONIOENCODING=utf-8
+ENV PYTHONUNBUFFERED=1
 
 # Health check to verify app is running
 HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health || exit 1

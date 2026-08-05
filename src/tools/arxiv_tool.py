@@ -1,4 +1,4 @@
-"""
+﻿"""
 Arxiv Tool - Academic papers search
 """
 from langchain_community.tools import ArxivQueryRun
@@ -15,8 +15,8 @@ def create_arxiv_tool():
     try:
         arxiv_wrapper = ArxivAPIWrapper(top_k_results=1, doc_content_chars_max=500)
         arxiv_tool = ArxivQueryRun(api_wrapper=arxiv_wrapper)
-        print("✓ Arxiv Tool created")
+        print("[OK] Arxiv Tool created")
         return arxiv_tool
     except Exception as e:
-        print(f"✗ Arxiv tool failed: {e}")
+        print(f"[FAIL] Arxiv tool failed: {e}")
         return None

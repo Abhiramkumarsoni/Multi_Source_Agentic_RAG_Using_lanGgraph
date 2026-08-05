@@ -1,4 +1,4 @@
-"""
+﻿"""
 Text Retriever Tool - About Abhiram search
 """
 from pathlib import Path
@@ -23,7 +23,7 @@ def create_text_retriever_tool(text_path: str):
         text_file = Path(text_path)
         
         if not text_file.exists():
-            print(f"✗ Text file not found: {text_path}")
+            print(f"[FAIL] Text file not found: {text_path}")
             return None
         
         loader = TextLoader(str(text_file))
@@ -44,9 +44,9 @@ def create_text_retriever_tool(text_path: str):
             "Search information about Abhiram. Use for questions about Abhiram's background, experience, or profile."
         )
         
-        print(f"✓ Text Retriever Tool created ({len(text_splits)} chunks)")
+        print(f"[OK] Text Retriever Tool created ({len(text_splits)} chunks)")
         return text_retriever_tool
         
     except Exception as e:
-        print(f"✗ Failed to create text retriever: {e}")
+        print(f"[FAIL] Failed to create text retriever: {e}")
         return None

@@ -1,4 +1,4 @@
-"""
+﻿"""
 Wikipedia Tool - General knowledge search
 """
 from langchain_community.tools import WikipediaQueryRun
@@ -15,8 +15,8 @@ def create_wikipedia_tool():
     try:
         wikipedia_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=500)
         wikipedia_tool = WikipediaQueryRun(api_wrapper=wikipedia_wrapper)
-        print("✓ Wikipedia Tool created")
+        print("[OK] Wikipedia Tool created")
         return wikipedia_tool
     except Exception as e:
-        print(f"✗ Wikipedia tool failed: {e}")
+        print(f"[FAIL] Wikipedia tool failed: {e}")
         return None

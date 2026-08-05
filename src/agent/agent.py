@@ -49,24 +49,37 @@ class AgenticRAGAgent:
     def _extract_response(self, messages: list) -> str:
         """
         Extract the final response from messages.
-        Matches notebook's ask_agent logic exactly.
+        Handles both plain string content and list-of-blocks content
+        (Groq can return either format).
         """
-        # Find the last AI message that is NOT a tool call
         for msg in reversed(messages):
             if isinstance(msg, AIMessage):
-                content = msg.content
-                # Skip messages with tool calls
+                # Skip messages that have active tool calls
                 if hasattr(msg, 'tool_calls') and msg.tool_calls:
                     continue
-                # Skip empty or tool-call formatted responses
-                if content and isinstance(content, str):
-                    content_stripped = content.strip()
-                    # Skip if it looks like a tool call XML
-                    if content_stripped.startswith('<') and '</function>' in content_stripped:
-                        continue
-                    if content_stripped:
-                        return content_stripped
-        
+
+                content = msg.content
+
+                # Handle list-of-blocks format: [{"type": "text", "text": "..."}]
+                if isinstance(content, list):
+                    text_parts = [
+                        block.get("text", "") if isinstance(block, dict) else str(block)
+                        for block in content
+                    ]
+                    content = " ".join(p for p in text_parts if p).strip()
+
+                if not content or not isinstance(content, str):
+                    continue
+
+                content_stripped = content.strip()
+
+                # Skip tool-call XML fragments
+                if content_stripped.startswith('<') and '</function>' in content_stripped:
+                    continue
+
+                if content_stripped:
+                    return content_stripped
+
         return "Sorry, I couldn't generate a response."
     
     def query(self, question: str) -> str:

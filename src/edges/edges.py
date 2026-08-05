@@ -50,7 +50,14 @@ def grade_documents(state) -> Literal["generate", "rewrite"]:
     user_messages = [m for m in messages if isinstance(m, HumanMessage)]
     question = user_messages[-1].content if user_messages else messages[0].content
 
-    docs = last_message.content
+    raw = last_message.content
+    if isinstance(raw, list):
+        docs = "\n\n".join(
+            block.get("text", str(block)) if isinstance(block, dict) else str(block)
+            for block in raw
+        )
+    else:
+        docs = str(raw) if raw else ""
 
     scored_result = chain.invoke({"question": question, "context": docs})
     score = scored_result.binary_score
