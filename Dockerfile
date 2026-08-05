@@ -23,8 +23,10 @@ WORKDIR $HOME/app
 # Copy requirements first (for Docker caching - faster builds)
 COPY --chown=user requirements_hf.txt requirements.txt
 
-# Install Python dependencies
+# Install CPU-only PyTorch FIRST to avoid downloading 2GB CUDA binaries
+# This reduces image size from ~4GB to ~1.5GB (critical for HF free tier scheduling)
 RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy all project files

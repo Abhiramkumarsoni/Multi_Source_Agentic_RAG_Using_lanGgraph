@@ -3,7 +3,7 @@
         "."
     ],
     "graphs": {
-        "router_agent": "./graph_export.py:graph"
+        "router_agent": "./router_graph.py:graph"
     },
     "env": "../.env"
 }

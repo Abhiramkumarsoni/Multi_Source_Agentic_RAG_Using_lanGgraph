@@ -1,0 +1,340 @@
+================================================================================
+        HUGGING FACE SPACES DEPLOYMENT WITH DOCKER & CI/CD PIPELINE
+                        Documentation by Abhiram Kumar Soni
+                              Date: 31st January 2026
+================================================================================
+
+TABLE OF CONTENTS
+-----------------
+1. Overview
+2. Prerequisites  
+3. Files Created for Deployment
+4. Step-by-Step Deployment Process
+5. Problems Faced & Resolutions
+6. GitHub Secrets Configuration
+7. How CI/CD Pipeline Works
+8. Troubleshooting Guide
+9. Useful Commands
+
+================================================================================
+1. OVERVIEW
+================================================================================
+
+This document describes how to deploy a Streamlit application (app_final.py) 
+to Hugging Face Spaces using Docker containers with an automated CI/CD pipeline 
+via GitHub Actions.
+
+Deployment URL: https://huggingface.co/spaces/abhiram-soni1/multi-source-rag-agent
+
+Tech Stack Used:
+- Streamlit (Web UI)
+- Docker (Containerization)
+- GitHub Actions (CI/CD)
+- Hugging Face Spaces (Hosting)
+- Git LFS (Large File Storage for PDFs)
+
+================================================================================
+2. PREREQUISITES
+================================================================================
+
+Before deploying, ensure you have:
+
+[x] GitHub account with repository
+[x] Hugging Face account
+[x] Hugging Face Access Token (with Write permission)
+[x] Git LFS installed locally
+[x] Docker knowledge (basic)
+
+================================================================================
+3. FILES CREATED FOR DEPLOYMENT
+================================================================================
+
+The following files were created/modified for deployment:
+
+┌──────────────────────────────────┬─────────────────────────────────────────────┐
+│ File                             │ Purpose                                     │
+├──────────────────────────────────┼─────────────────────────────────────────────┤
+│ Dockerfile                       │ Defines how to build the Docker container   │
+│ .dockerignore                    │ Excludes unnecessary files from Docker      │
+│ requirements_hf.txt              │ Minimal dependencies for production         │
+│ .github/workflows/deploy.yml     │ CI/CD pipeline for auto-deployment          │
+│ .gitattributes                   │ Git LFS tracking configuration              │
+│ README.md (updated)              │ Added HuggingFace YAML config at top        │
+└──────────────────────────────────┴─────────────────────────────────────────────┘
+
+================================================================================
+4. STEP-BY-STEP DEPLOYMENT PROCESS
+================================================================================
+
+STEP 1: Create Hugging Face Space
+---------------------------------
+1. Go to https://huggingface.co
+2. Click your profile → "New Space"
+3. Fill in:
+   - Space name: multi-source-rag-agent
+   - License: MIT
+   - SDK: Docker
+   - Visibility: Public
+4. Click "Create Space"
+
+STEP 2: Get Hugging Face Access Token
+-------------------------------------
+1. Go to https://huggingface.co/settings/tokens
+2. Click "New Token"
+3. Name: github-deploy
+4. Permission: Write
+5. Click "Create" and COPY the token (hf_xxxx...)
+
+STEP 3: Configure GitHub Secrets
+---------------------------------
+1. Go to your GitHub repository
+2. Settings → Secrets and variables → Actions
+3. Add these 3 secrets:
+
+   Secret Name      │ Value
+   ─────────────────┼────────────────────────────
+   HF_TOKEN         │ hf_your_token_here
+   HF_USERNAME      │ abhiram-soni1
+   HF_SPACE_NAME    │ multi-source-rag-agent
+
+STEP 4: Create Dockerfile
+-------------------------
+Created Dockerfile with:
+- Python 3.11-slim base image
+- Non-root user (HuggingFace requirement)
+- Port 7860 exposed
+- Streamlit configured to run on 0.0.0.0:7860
+
+STEP 5: Create requirements_hf.txt
+----------------------------------
+Created minimal requirements file with only production dependencies
+(removed dev tools like jupyter, notebook, etc.)
+
+STEP 6: Update README.md with HuggingFace Config
+------------------------------------------------
+Added YAML frontmatter at the top of README.md:
+
+---
+title: Multi Source Rag Agent
+emoji: 🤖
+colorFrom: purple
+colorTo: blue
+sdk: docker
+pinned: false
+license: mit
+app_port: 7860
+---
+
+STEP 7: Create GitHub Actions Workflow
+--------------------------------------
+Created .github/workflows/deploy.yml that:
+- Triggers on push to main branch
+- Checks out code with Git LFS
+- Pushes to HuggingFace Spaces
+
+STEP 8: Enable Git LFS for Large Files
+--------------------------------------
+Ran these commands:
+  git lfs install
+  git lfs track "*.pdf"
+  git lfs migrate import --include="*.pdf" --everything
+
+STEP 9: Commit and Push
+-----------------------
+  git add .
+  git commit -m "Add Docker and CI/CD for Hugging Face deployment"
+  git push origin main --force
+
+================================================================================
+5. PROBLEMS FACED & RESOLUTIONS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PROBLEM 1: Binary File Rejection                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Error Message:                                                              │
+│   "Your push was rejected because it contains binary files."                │
+│   "Offending files: data/Agent Quality Whitepaper.pdf"                      │
+│                                                                             │
+│ Root Cause:                                                                 │
+│   Hugging Face doesn't accept large binary files directly.                  │
+│   They require Git LFS (Large File Storage) for files like PDFs.            │
+│                                                                             │
+│ Resolution:                                                                 │
+│   1. Installed Git LFS:                                                     │
+│      git lfs install                                                        │
+│                                                                             │
+│   2. Tracked PDF files:                                                     │
+│      git lfs track "*.pdf"                                                  │
+│                                                                             │
+│   3. Migrated existing PDFs to LFS:                                         │
+│      git lfs migrate import --include="*.pdf" --everything                  │
+│                                                                             │
+│   4. Force pushed with LFS:                                                 │
+│      git push origin main --force                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PROBLEM 2: Configuration Error - Missing Configuration in README           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Error Message:                                                              │
+│   "Configuration error: Missing configuration in README"                    │
+│                                                                             │
+│ Screenshot showed HuggingFace expecting a README with YAML frontmatter.     │
+│                                                                             │
+│ Root Cause:                                                                 │
+│   Initially created README_HF.md separately, but HuggingFace only reads     │
+│   the main README.md file for Space configuration.                          │
+│                                                                             │
+│ Resolution:                                                                 │
+│   Added YAML frontmatter directly to the existing README.md:                │
+│                                                                             │
+│   ---                                                                       │
+│   title: Multi Source Rag Agent                                             │
+│   emoji: 🤖                                                                 │
+│   colorFrom: purple                                                         │
+│   colorTo: blue                                                             │
+│   sdk: docker                                                               │
+│   pinned: false                                                             │
+│   license: mit                                                              │
+│   app_port: 7860                                                            │
+│   ---                                                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PROBLEM 3: Files Not Pushed to GitHub                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Issue:                                                                      │
+│   After running git commit, files were committed locally but not pushed.    │
+│                                                                             │
+│ Root Cause:                                                                 │
+│   The git push command was not executed or didn't complete.                 │
+│   Local main was ahead of origin/main.                                      │
+│                                                                             │
+│ Resolution:                                                                 │
+│   Verified with: git log --oneline -3 --decorate                            │
+│   Saw: (HEAD -> main) but origin/main was behind.                           │
+│   Fixed by running: git push origin main                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+6. GITHUB SECRETS CONFIGURATION
+================================================================================
+
+Location: GitHub Repo → Settings → Secrets and variables → Actions
+
+Required Secrets:
+─────────────────
+1. HF_TOKEN
+   - Your Hugging Face access token
+   - Get from: https://huggingface.co/settings/tokens
+   - Must have "Write" permission
+
+2. HF_USERNAME  
+   - Your Hugging Face username
+   - Example: abhiram-soni1
+
+3. HF_SPACE_NAME
+   - Name of your HuggingFace Space (without username)
+   - Example: multi-source-rag-agent
+
+================================================================================
+7. HOW CI/CD PIPELINE WORKS
+================================================================================
+
+Workflow File: .github/workflows/deploy.yml
+
+Trigger:
+  - Automatically runs when you push to 'main' branch
+  - Can also be triggered manually from GitHub Actions tab
+
+Pipeline Steps:
+  1. Checkout Repository
+     - Downloads code with full git history
+     - Enables Git LFS support
+  
+  2. Setup Git LFS
+     - Installs Git LFS
+     - Tracks PDF files
+
+  3. Push to Hugging Face Hub
+     - Configures git user
+     - Adds HuggingFace as remote
+     - Force pushes code to HuggingFace Space
+
+After Push:
+  - HuggingFace reads README.md for configuration
+  - Detects sdk: docker
+  - Builds Docker container using Dockerfile
+  - Starts the Streamlit app on port 7860
+
+================================================================================
+8. TROUBLESHOOTING GUIDE
+================================================================================
+
+Issue: Build fails on HuggingFace
+---------------------------------
+Solution: 
+  1. Go to HuggingFace Space → Settings → Logs
+  2. Check Docker build logs for errors
+  3. Common issues:
+     - Missing dependencies in requirements_hf.txt
+     - Import errors (check relative imports)
+     - Port mismatch (must be 7860)
+
+Issue: GitHub Actions fails
+---------------------------
+Solution:
+  1. Check if secrets are set correctly
+  2. Verify HF_TOKEN has Write permission
+  3. Check HF_USERNAME and HF_SPACE_NAME spelling
+
+Issue: App runs but shows errors
+--------------------------------
+Solution:
+  1. Check if all source files are included
+  2. Verify data/ folder has required files (PDF, txt)
+  3. Check if .dockerignore isn't excluding needed files
+
+Issue: Git LFS errors
+---------------------
+Solution:
+  1. Run: git lfs install
+  2. Run: git lfs pull
+  3. Verify: git lfs ls-files (should show PDF)
+
+================================================================================
+9. USEFUL COMMANDS
+================================================================================
+
+Git Commands:
+─────────────
+git status                          # Check file status
+git log --oneline -5                # View recent commits
+git remote -v                       # View remotes
+git push origin main --force        # Force push (after LFS migrate)
+
+Git LFS Commands:
+─────────────────
+git lfs install                     # Initialize Git LFS
+git lfs track "*.pdf"               # Track PDF files
+git lfs ls-files                    # List LFS tracked files
+git lfs migrate import --include="*.pdf" --everything  # Migrate existing files
+
+Docker Commands (for local testing):
+────────────────────────────────────
+docker build -t my-app .            # Build image locally
+docker run -p 7860:7860 my-app      # Run container locally
+docker logs <container_id>          # View logs
+
+================================================================================
+                              END OF DOCUMENTATION
+================================================================================
+
+Notes:
+- Keep this documentation updated when making changes to deployment
+- Always test Docker build locally before pushing
+- Monitor HuggingFace Space logs for runtime errors
+
+Author: Abhiram Kumar Soni
+Project: Multi-Source Agentic RAG with LangGraph

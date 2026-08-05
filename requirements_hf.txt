@@ -10,6 +10,8 @@ langchainhub>=0.1.0
 langsmith>=0.1.0
 
 # LLM & Embeddings
+# NOTE: torch is pre-installed as CPU-only in Dockerfile (saves ~2GB)
+# Do NOT add 'torch' here or pip will try to install CUDA version
 groq>=0.5.0
 sentence-transformers>=2.2.0
 

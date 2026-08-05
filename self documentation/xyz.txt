@@ -72,3 +72,6 @@ streamlit run streamlit_ui/app.py
 streamlit run streamlit_ui/app_final.py
 
 ================================================================================
+
+
+updata main.yml based on the what we are going to deploy this appliction final_app.py in huggingface

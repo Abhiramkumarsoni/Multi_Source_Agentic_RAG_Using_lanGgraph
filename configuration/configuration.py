@@ -54,10 +54,12 @@ RETRIEVER_K = 4
 # Maximum recursion limit for graph execution
 RECURSION_LIMIT = 25
 
+
 # ==================== Tool Configuration ====================
 # Wikipedia settings
 WIKIPEDIA_TOP_K = 1
 WIKIPEDIA_DOC_CONTENT_CHARS_MAX = 500
+
 
 # Arxiv settings
 ARXIV_TOP_K = 1
