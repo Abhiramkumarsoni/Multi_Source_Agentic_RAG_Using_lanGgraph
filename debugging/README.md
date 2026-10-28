@@ -35,6 +35,14 @@ langgraph dev
 
 This starts LangGraph Studio where you can visualize and test the workflow.
 
+## LangGraph Configuration
+
+`langgraph.json` tells the LangGraph CLI how to load this agent:
+
+- **`dependencies`** lists the project paths whose dependencies should be installed. `"."` refers to this `debugging` folder.
+- **`graphs`** maps the graph name shown in LangGraph Studio to the Python module and exported graph object. Here, `agentic_rag_agent` loads `graph` from `agentic_rag_agent.py`.
+- **`env`** points to the environment-variable file, relative to this configuration file. `"../.env"` uses the `.env` file in the repository root.
+
 ### Test Queries
 
 - "What is LangGraph?"

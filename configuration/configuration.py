@@ -36,7 +36,7 @@ URLS = [
 ]
 
 # ==================== LLM Configuration ====================
-DEFAULT_MODEL = "llama-3.1-8b-instant"
+DEFAULT_MODEL = "openai/gpt-oss-20b"
 DEFAULT_TEMPERATURE = 0
 
 # ==================== Embedding Configuration ====================
