@@ -29,6 +29,7 @@ jobs:
                   # Track PDF files with LFS
                   git lfs track "*.pdf"
                   git lfs track "data/*.pdf"
+                  git lfs track "data/*.txt"
 
             # Step 3: Push to Hugging Face Spaces
             - name: Push to Hugging Face Hub
@@ -39,12 +40,13 @@ jobs:
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
 
-                  # Add .gitattributes if LFS tracking created it
-                  git add .gitattributes 2>/dev/null || true
-                  git commit -m "Track PDFs with Git LFS" 2>/dev/null || true
+                  # Deploy only the current snapshot, not GitHub's binary-containing history.
+                  git checkout --orphan hf-deploy
+                  git add -A
+                  git commit -m "Deploy to Hugging Face Spaces"
 
                   # Add Hugging Face remote with token authentication
                   git remote add huggingface https://user:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/${{ secrets.HF_USERNAME }}/${{ secrets.HF_SPACE_NAME }}
 
                   # Force push to Hugging Face
-                  git push huggingface main --force
+                  git push huggingface hf-deploy:main --force
